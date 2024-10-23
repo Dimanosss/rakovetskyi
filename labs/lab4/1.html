@@ -70,7 +70,7 @@
     
     <div>
         <h3>6. Виберіть фрукти (можна вибрати кілька):</h3>
-        <select name="question5" multiple size="4">
+        <select name="question5" id="fruits" multiple size="4">
             <option value="1">Яблуко</option>
             <option value="1">Груша</option>
             <option value="0">Морква</option>
@@ -148,7 +148,7 @@
         }
 
         // Обробка множинного вибору
-        const multiSelect = document.getElementsByName('question5')[0];
+        const multiSelect = document.getElementById('fruits');
         const selectedOptions = Array.from(multiSelect.selectedOptions);
         const selectedAnswers = selectedOptions.map(option => option.text);
         const correctCount = selectedOptions.reduce((count, option) => count + (option.value === "1" ? 1 : 0), 0);
