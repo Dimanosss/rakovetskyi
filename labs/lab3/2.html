@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екранна клавіатура</title>
+    <style>
+        .keyboard {
+            margin-top: 20px;
+        }
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .keyboard-button {
+            margin: 2px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Екранна клавіатура</h1>
+    
+    <textarea id="textOutput" placeholder="Тут буде з'являтися текст..."></textarea>
+
+    <div class="keyboard">
+        <!-- Цифрові кнопки -->
+        <div class="keyboard-row" id="numberRow"></div>
+        <!-- Перший ряд літер -->
+        <div class="keyboard-row" id="letterRow1"></div>
+        <!-- Другий ряд літер -->
+        <div class="keyboard-row" id="letterRow2"></div>
+        <!-- Третій ряд літер -->
+        <div class="keyboard-row" id="letterRow3"></div>
+        <!-- Кнопка очищення -->
+        <div class="keyboard-row">
+            <button class="keyboard-button" onclick="clearText()">Очистити поле</button>
+        </div>
+    </div>
+
+    <script>
+        // Масив з цифрами та літерами
+        let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        let letters = ['а', 'б', 'в', 'г', 'д', 'е', 'є', 'ж', 'з', 'и', 'і', 'ї', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ю', 'я'];
+
+        // Розподіляємо літери по рядках (3 рядки літер)
+        let letterRow1 = letters.slice(0, 11);  // Перші 11 літер
+        let letterRow2 = letters.slice(11, 22); // Наступні 11 літер
+        let letterRow3 = letters.slice(22);     // Останні літери
+
+        // Функція для додавання кнопок на екранну клавіатуру
+        function createKeyboardRow(containerId, keys) {
+            let container = document.getElementById(containerId);
+            keys.forEach(key => {
+                let button = document.createElement('button');
+                button.innerText = key;
+                button.classList.add('keyboard-button');
+                button.onclick = () => addToText(key);
+                container.appendChild(button);
+            });
+        }
+
+        // Додаємо кнопки з цифрами і літерами
+        createKeyboardRow('numberRow', numbers);
+        createKeyboardRow('letterRow1', letterRow1);
+        createKeyboardRow('letterRow2', letterRow2);
+        createKeyboardRow('letterRow3', letterRow3);
+
+        // Функція для додавання символу в текстове поле
+        function addToText(character) {
+            document.getElementById('textOutput').value += character;
+        }
+
+        // Функція для очищення текстового поля
+        function clearText() {
+            document.getElementById('textOutput').value = '';
+        }
+    </script>
+
+</body>
+</html>
