@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ієрархічне дерево</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none; /* Вимкнути маркери списку */
+            padding-left: 20px; /* Відступ для підкатегорій */
+        }
+        .toggle {
+            cursor: pointer; /* Змінюємо курсор на pointer */
+            color: blue; /* Колір для посилань */
+            text-decoration: underline; /* Підкреслення для посилань */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ієрархічне дерево</h1>
+    <ul id="hierarchy">
+        <li>
+            <span class="toggle">Фрукти</span>
+            <ul>
+                <li>Яблуко</li>
+                <li>Ананас</li>
+                <li>Абрикос</li>
+                <li>Груша</li>
+                <li>Лимон</li>
+            </ul>
+        </li>
+        <li>
+            <span class="toggle">Овочі</span>
+            <ul>
+                <li>Картопля</li>
+                <li>Буряк</li>
+                <li>Морква</li>
+                <li>Груша</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        // Отримуємо всі елементи з класом "toggle"
+        const toggles = document.querySelectorAll('.toggle');
+
+        // Додаємо обробник подій для кожного елемента
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                // Знаходимо наступний ul (підкатегорії)
+                const nextUl = this.nextElementSibling;
+                if (nextUl) {
+                    // Перемикаємо клас "hidden" для показу/приховання
+                    nextUl.style.display = nextUl.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Сховати всі підкатегорії при завантаженні сторінки
+        document.querySelectorAll('#hierarchy ul').forEach(ul => {
+            ul.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
