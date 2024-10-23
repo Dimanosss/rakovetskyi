@@ -117,30 +117,27 @@
         }
 
         // Обробка прапорців
-        for (let i = 2; i < 4; i++) {
+        for (let i = 2; i < 5; i++) {
             const checkboxes = document.getElementsByName('question' + i);
             const selectedAnswers = [];
             let correctAnswers = 0;
-            let wrongAnswers = 0;
 
             for (let checkbox of checkboxes) {
                 if (checkbox.checked) {
                     selectedAnswers.push(checkbox.nextSibling.nodeValue.trim());
                     if (checkbox.value === '1') {
                         correctAnswers++;
-                    } else {
-                        wrongAnswers++;
                     }
                 }
             }
 
             let score = 0;
-            if (correctAnswers === 2 && selectedAnswers.length === 2) {
-                score = 2;
-            } else if (correctAnswers === 1 && selectedAnswers.length === 2) {
-                score = 1;
-            } else if (selectedAnswers.length === 3 || selectedAnswers.length === 4) {
-                score = 0;
+            if (selectedAnswers.length === 2 && correctAnswers === 2) {
+                score = 2; // 2 правильні
+            } else if (selectedAnswers.length === 2 && correctAnswers === 1) {
+                score = 1; // 1 правильний
+            } else if (selectedAnswers.length > 2) {
+                score = 0; // більше 2-х - 0 балів
             }
 
             totalScore += score;
