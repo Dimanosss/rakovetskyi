@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма з обробкою подій</title>
+</head>
+<body>
+    <h3> Завдання 3.</H3>
+    <h1>Форма з обробкою подій</h1>
+    <form>
+        <label>
+            Перше текстове поле:
+            <input type="text" id="textInput" />
+        </label>
+        <br />
+        <label>
+            Друге текстове поле:
+            <select id="selectInput">
+                <option value="">Виберіть опцію</option>
+                <option value="Опція 1">Опція 1</option>
+                <option value="Опція 2">Опція 2</option>
+                <option value="Опція 3">Опція 3</option>
+            </select>
+        </label>
+        <br />
+    </form>
+    <div>
+        <h3>Повідомлення:</h3>
+        <textarea id="outputText" rows="4" cols="50" readonly></textarea>
+    </div>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const selectInput = document.getElementById('selectInput');
+        const outputText = document.getElementById('outputText');
+
+        textInput.addEventListener('input', function() {
+            const inputValue = textInput.value;
+            outputText.value = `Ви ввели: ${inputValue}`;
+        });
+
+        selectInput.addEventListener('change', function() {
+            const selectedValue = selectInput.value;
+            outputText.value = `Вибрано: ${selectedValue}`;
+        });
+    </script>
+</body>
+</html>

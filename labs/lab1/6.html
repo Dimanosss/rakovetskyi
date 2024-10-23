@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <h4>Завдання 6.</h4>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор товарів</title>
+    <script>
+        // Масиви для товарів, їх кількості та вартості
+        let products = ["Диван", "Дощовик", "Дошка", "Декор", "Долар", "Джерело"];
+        let quantities = [10, 25, 50, 5, 100, 200];
+        let costs = [1500, 300, 50, 200, 40, 120];
+
+        let currentIndex = -1; // Змінна для зберігання індексу знайденого товару
+
+        function fun1() {
+            let inputName = document.forms["form1"].name_cont.value;
+            // Знайти товар, назва якого починається на "Д"
+            for (let i = 0; i < products.length; i++) {
+                if (products[i].toLowerCase() === inputName.toLowerCase()) {
+                    currentIndex = i; // Зберігаємо індекс товару
+                    document.forms["form1"].output_quantity.value = quantities[i];
+                    document.forms["form1"].output_cost.value = costs[i];
+                    return;
+                }
+            }
+            // Якщо товар не знайдено
+            document.forms["form1"].output_quantity.value = "Товар не знайдено";
+            document.forms["form1"].output_cost.value = "";
+            currentIndex = -1; // Скидаємо індекс
+        }
+
+        function fun2() {
+            if (currentIndex === -1) {
+                alert("Спочатку знайдіть товар.");
+                return;
+            }
+            let totalCost = quantities[currentIndex] * costs[currentIndex];
+            document.forms["form1"].output_total.value = `Загальна сума: ${totalCost} грн`;
+        }
+    </script>
+</head>
+<body>
+    <form name="form1">
+        Введіть назву товару (на "Д"): <input type="text" name="name_cont"><br>
+        <input type="button" value="Наявна кількість і вартість" onClick="fun1()"><br>
+        Кількість: <input type="text" size="70" name="output_quantity" readonly><br>
+        Вартість: <input type="text" size="70" name="output_cost" readonly><br>
+        <input type="button" value="Загальна сума" onClick="fun2()"><br>
+        <input type="text" size="70" name="output_total" readonly><br>
+    </form>
+</body>
+</html>

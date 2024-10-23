@@ -1,0 +1,25 @@
+<html>
+<head>
+<h3>Завдання 4.</h3>
+<script>
+function fun()
+{
+let x, y, z;
+x = parseInt(main_form.t_x.value);
+y = parseInt(main_form.t_y.value);
+if(x>0 && y!=0) z=(2*x)/y + x*y*y; else
+if((2*x+y)/2!=0) z=y/2*x; else
+z=x*x;
+main_form.t_z.value = "" + z;
+}
+</script>
+</head>
+<body>
+<form id = "main_form">
+x<input type="text" id = "t_x" value=""><br>
+y<input type="text" id = "t_y" value=""><br>
+z<input type="text" id = "t_z" value=""><br>
+<input type = "button" onClick = "fun();" value = "Розрахувати">
+</form>
+</body>
+</html>

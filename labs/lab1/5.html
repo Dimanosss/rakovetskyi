@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h4>Завдання 5.</h4>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integral Calculator</title>
+    <script>
+        function calculateIntegral() {
+            let x = parseInt(document.getElementById("t_x").value);
+            let y = parseInt(document.getElementById("t_y").value);
+            let sum = 0.0;
+            const lowerBound = 3; // Нижня межа інтегралу
+            const upperBound = 7; // Верхня межа інтегралу
+
+            for (let i = lowerBound; i <= upperBound; i++) {
+                // Обчислюємо факторіал (i + 2)!
+                let factorial = 1;
+                for (let j = 1; j <= (i + 2); j++) {
+                    factorial *= j;
+                }
+                // Обчислюємо поточний член
+                let cur = Math.pow(-1, i + 1) * ((7 * i - x * y) * (i * i) / (i + 12) - factorial);
+                
+                sum += cur; // Додаємо до суми
+            }
+
+            document.getElementById("t_c").value = sum; // Виводимо результат
+        }
+    </script>
+</head>
+<body>
+    <form id="main_form">
+        x=<input type="text" id="t_x" value=""><br>
+        y=<input type="text" id="t_y" value=""><br>
+        Результат:<input type="text" id="t_c" value="" readonly><br>
+        <input type="button" onClick="calculateIntegral();" value="Розрахувати">
+    </form>
+</body>
+</html>

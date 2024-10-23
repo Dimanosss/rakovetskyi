@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <h4>Завдання 7.</h4>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор товарів</title>
+    <script>
+        // Масиви для товарів, їх кількості та вартості
+        let products = ["Диван", "Дощовик", "Дошка", "Декор", "Долар", "Джерело"];
+        let quantities = [10, 25, 50, 5, 100, 200];
+        let costs = [1500, 300, 50, 200, 40, 120];
+
+        function updateFields() {
+            const select = document.getElementById("productSelect");
+            const selectedIndex = select.selectedIndex;
+
+            // Отримуємо дані про товар
+            if (selectedIndex > 0) { // Перевірка, що вибрано товар (не "Оберіть товар")
+                const quantity = quantities[selectedIndex - 1]; // -1 для корекції індексу
+                const cost = costs[selectedIndex - 1];
+
+                document.forms["form1"].output_quantity.value = quantity;
+                document.forms["form1"].output_cost.value = cost;
+            } else {
+                document.forms["form1"].output_quantity.value = "";
+                document.forms["form1"].output_cost.value = "";
+            }
+        }
+
+        function fun2() {
+            const select = document.getElementById("productSelect");
+            const selectedIndex = select.selectedIndex;
+
+            if (selectedIndex > 0) {
+                const totalCost = quantities[selectedIndex - 1] * costs[selectedIndex - 1];
+                document.forms["form1"].output_total.value = `Загальна сума: ${totalCost} грн`;
+            } else {
+                alert("Будь ласка, оберіть товар.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="form1">
+        <label for="productSelect">Оберіть товар:</label>
+        <select id="productSelect" onChange="updateFields()">
+            <option value="">Оберіть товар</option>
+            <option value="Диван">Диван</option>
+            <option value="Дощовик">Дощовик</option>
+            <option value="Дошка">Дошка</option>
+            <option value="Декор">Декор</option>
+            <option value="Долар">Долар</option>
+            <option value="Джерело">Джерело</option>
+        </select><br>
+
+        Кількість: <input type="text" size="70" name="output_quantity" readonly><br>
+        Вартість: <input type="text" size="70" name="output_cost" readonly><br>
+        <input type="button" value="Загальна сума" onClick="fun2()"><br>
+        <input type="text" size="70" name="output_total" readonly><br>
+    </form>
+</body>
+</html>
