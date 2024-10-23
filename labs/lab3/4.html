@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перегляд зображень</title>
+    <style>
+        #image-container {
+            text-align: center;
+            margin: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img id="current-image" src="" alt="Зображення" />
+    </div>
+    <div style="text-align: center;">
+        <button id="prev-button">Назад</button>
+        <button id="next-button">Вперед</button>
+    </div>
+
+    <script>
+        // Імена файлів зображень
+        let images = ['file1.jpg', 'file2.gif', 'file3.gif', 'file4.png'];
+
+        // Індекс для поточного зображення
+        let currentIndex = 0;
+
+        // Функція для оновлення зображення
+        function updateImage() {
+            const imgElement = document.getElementById('current-image');
+            imgElement.src = images[currentIndex];
+        }
+
+        // Функція для переходу до наступного зображення
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length; // Циклічний перехід
+            updateImage();
+        }
+
+        // Функція для переходу до попереднього зображення
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length; // Циклічний перехід
+            updateImage();
+        }
+
+        // Призначення обробників подій для кнопок
+        document.getElementById('next-button').addEventListener('click', nextImage);
+        document.getElementById('prev-button').addEventListener('click', prevImage);
+
+        // Ініціалізація зображення при завантаженні
+        updateImage();
+    </script>
+</body>
+</html>
