@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розрахунок площі круга</title>
+    <script>
+        function calculateArea() {
+            // Отримуємо радіус з текстового поля
+            let radius = document.getElementById("radius").value;
+
+            // Перевіряємо, чи введене значення є числом і більше нуля
+            if (radius > 0) {
+                // Обчислюємо площу круга
+                let area = Math.PI * Math.pow(radius, 2);
+
+                // Виводимо результат у відповідний елемент
+                document.getElementById("area").innerText = area.toFixed(2);
+            } else {
+                // Якщо значення некоректне, виводимо повідомлення
+                document.getElementById("area").innerText = "Введіть дійсне значення радіуса!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Розрахунок площі круга</h1>
+
+    <label for="radius">Радіус:</label>
+    <input type="number" id="radius" oninput="calculateArea()" placeholder="Введіть радіус">
+
+    <p>Площа: <span id="area">0</span></p>
+</body>
+</html>
