@@ -152,18 +152,14 @@
         const selectedOptions = Array.from(multiSelect.selectedOptions);
         const selectedAnswers = selectedOptions.map(option => option.text);
         const correctCount = selectedOptions.reduce((count, option) => count + (option.value === "1" ? 1 : 0), 0);
-        
         let multiScore = 0;
 
-        if (selectedOptions.length > 0) {
-            // Враховуємо бали для вибраних варіантів
-            if (selectedOptions.length === correctCount && correctCount > 0) {
-                multiScore = 2; // Всі правильні
-            } else if (correctCount === 1) {
-                multiScore = 1; // Один правильний
-            } else {
-                multiScore = 0; // Неправильні або частково вірні
-            }
+        if (correctCount === selectedOptions.length && correctCount > 0) {
+            multiScore = 2; // Всі правильні
+        } else if (correctCount === 1) {
+            multiScore = 1; // Один правильний
+        } else {
+            multiScore = 0; // Неправильні або частково вірні
         }
 
         totalScore += multiScore;
