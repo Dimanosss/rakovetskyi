@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Methods Demo</title>
+    <script>
+        window.onload = function() {
+            // 1. console.info() - виводить інформаційне повідомлення
+            console.info("Це інформаційне повідомлення.");
+
+            // 2. console.warn() - виводить попередження
+            console.warn("Це попередження.");
+
+            // 3. console.error() - виводить помилку
+            console.error("Це повідомлення про помилку.");
+
+            // 4. console.dir() - виводить інтерактивне дерево об'єкта
+            let obj = { name: "John", age: 30, city: "New York" };
+            console.dir(obj);
+
+            // 5. console.dirxml() - виводить XML або HTML дерево
+            console.dirxml(document.body);
+
+            // 6. console.time() і console.timeEnd() - вимір часу виконання блоку коду
+            console.time("Таймер");
+            for (let i = 0; i < 100000; i++) { /* Порожній цикл для затримки */ }
+            console.timeEnd("Таймер");
+
+            // 7. console.profile() і console.profileEnd() - профілювання коду (може не підтримуватися всіма браузерами)
+            console.profile("Профілювання");
+            for (let i = 0; i < 100000; i++) { /* Профільований код */ }
+            console.profileEnd("Профілювання");
+
+            // 8. console.assert() - перевірка умови, якщо false - виводить повідомлення
+            let x = 10;
+            console.assert(x > 15, "Значення x менше або дорівнює 15!");
+
+            // Повідомлення виводиться лише, якщо умова хибна (x > 15 == false)
+        }
+    </script>
+</head>
+<body>
+    <h1>Відкрийте консоль для перегляду результатів</h1>
+    <p>Для перегляду результатів відкрийте вкладку Console у DevTools (F12).</p>
+</body>
+</html>
