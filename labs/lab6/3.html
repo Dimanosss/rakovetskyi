@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Валідація форми</title>
+    <title>Форма реєстрації</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
         .form-container {
-            max-width: 500px;
+            max-width: 400px;
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #f9f9f9;
+        }
+        .form-container h2 {
+            text-align: center;
         }
         .form-group {
             margin-bottom: 15px;
@@ -25,27 +28,31 @@
             font-weight: bold;
         }
         .form-group input {
-            width: calc(100% - 30px);
+            width: 100%;
             padding: 8px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .form-group .error {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
-        .form-group .success-icon {
-            margin-left: 10px;
-            color: green;
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
         }
         .form-group.error input {
             border-color: red;
-            color: red;
         }
         .form-group.success input {
             border-color: green;
+        }
+        .form-group .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -53,74 +60,134 @@
     <div class="form-container">
         <h2>Форма реєстрації</h2>
         <form id="registrationForm">
+            <!-- Поле для електронної пошти -->
             <div class="form-group" id="emailGroup">
-                <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" placeholder="example@pnu.edu.ua">
-                <span class="error"></span>
+                <label for="email">Адреса електронної пошти:</label>
+                <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                <span class="error-message" id="emailError"></span>
             </div>
+            <!-- Поле для імені та прізвища -->
             <div class="form-group" id="fullnameGroup">
                 <label for="fullname">Ім’я та прізвище:</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Ім’я Прізвище">
-                <span class="error"></span>
+                <input type="text" id="fullname" name="fullname" placeholder="Ваше ім’я та прізвище" required>
+                <span class="error-message" id="fullnameError"></span>
             </div>
+            <!-- Поле для логіну -->
             <div class="form-group" id="usernameGroup">
                 <label for="username">Логін:</label>
-                <input type="text" id="username" name="username" placeholder="Ваш логін">
-                <span class="error"></span>
+                <input type="text" id="username" name="username" placeholder="Ваш логін" required>
+                <span class="error-message" id="usernameError"></span>
             </div>
+            <!-- Поле для пароля -->
             <div class="form-group" id="passwordGroup">
                 <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" placeholder="Ваш пароль">
-                <span class="error"></span>
+                <input type="password" id="password" name="password" placeholder="Ваш пароль" required>
+                <span class="error-message" id="passwordError"></span>
             </div>
+            <!-- Поле для поштового індексу -->
             <div class="form-group" id="postcodeGroup">
                 <label for="postcode">Поштовий індекс:</label>
-                <input type="text" id="postcode" name="postcode" placeholder="Ваш поштовий індекс">
-                <span class="error"></span>
+                <input type="text" id="postcode" name="postcode" placeholder="Ваш поштовий індекс" required>
+                <span class="error-message" id="postcodeError"></span>
             </div>
-            <div>
-                <button type="button" onclick="validateForm()">Перевірити</button>
+            <!-- Кнопка відправки -->
+            <div class="form-group">
+                <input type="submit" value="Зареєструватися">
             </div>
         </form>
     </div>
 
     <script>
-        function validateForm() {
-            // Валідація кожного поля
-            validateField("email", /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i, "Повинен бути у форматі example@pnu.edu.ua");
-            validateField("fullname", /^[A-ZА-Я][a-zа-я]+ [A-ZА-Я]+$/, "Ім’я з великої, прізвище великими літерами");
-            validateField("username", /^[a-zA-Z0-9]+$/, "Тільки латиниця");
-            validateField("password", /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[_\-!@#$%^&*]).{8,}$/, "Мінімум 8 символів, 1 літера, цифра і спецсимвол");
-            validateField("postcode", /^\d{5}$/, "Має складатися з 5 цифр");
-        }
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Запобігаємо відправці форми
 
-        function validateField(id, regex, errorMessage) {
-            const field = document.getElementById(id);
-            const group = document.getElementById(`${id}Group`);
-            const errorSpan = group.querySelector(".error");
-            
-            if (regex.test(field.value)) {
-                // Успішна валідація
-                group.classList.remove("error");
-                group.classList.add("success");
-                errorSpan.textContent = "";
-                if (!group.querySelector(".success-icon")) {
-                    const successIcon = document.createElement("span");
-                    successIcon.className = "success-icon";
-                    successIcon.textContent = "✔";
-                    group.appendChild(successIcon);
-                }
+            let valid = true;
+
+            // Перевірка e-mail
+            const email = document.getElementById("email").value;
+            const emailGroup = document.getElementById("emailGroup");
+            const emailError = document.getElementById("emailError");
+            const emailRegex = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
+            if (!emailRegex.test(email)) {
+                valid = false;
+                emailGroup.classList.add("error");
+                emailGroup.classList.remove("success");
+                emailError.textContent = "Повинен бути у форматі example@pnu.edu.ua";
             } else {
-                // Помилка валідації
-                group.classList.remove("success");
-                group.classList.add("error");
-                errorSpan.textContent = errorMessage;
-                const successIcon = group.querySelector(".success-icon");
-                if (successIcon) {
-                    group.removeChild(successIcon);
-                }
+                emailGroup.classList.add("success");
+                emailGroup.classList.remove("error");
+                emailError.textContent = "";
             }
-        }
+
+            // Перевірка ім’я та прізвище
+            const fullname = document.getElementById("fullname").value;
+            const fullnameGroup = document.getElementById("fullnameGroup");
+            const fullnameError = document.getElementById("fullnameError");
+            const fullnameRegex = /^[A-ZА-ЯІЄЇ][a-zа-яіїє]+ [A-ZА-ЯІЄЇ]+$/;
+            if (!fullnameRegex.test(fullname)) {
+                valid = false;
+                fullnameGroup.classList.add("error");
+                fullnameGroup.classList.remove("success");
+                fullnameError.textContent = "Ім’я з великої, прізвище великими літерами";
+            } else {
+                fullnameGroup.classList.add("success");
+                fullnameGroup.classList.remove("error");
+                fullnameError.textContent = "";
+            }
+
+            // Перевірка логіну
+            const username = document.getElementById("username").value;
+            const usernameGroup = document.getElementById("usernameGroup");
+            const usernameError = document.getElementById("usernameError");
+            const usernameRegex = /^[a-zA-Z0-9]+$/;
+            if (!usernameRegex.test(username)) {
+                valid = false;
+                usernameGroup.classList.add("error");
+                usernameGroup.classList.remove("success");
+                usernameError.textContent = "Тільки латиниця";
+            } else {
+                usernameGroup.classList.add("success");
+                usernameGroup.classList.remove("error");
+                usernameError.textContent = "";
+            }
+
+            // Перевірка пароля
+            const password = document.getElementById("password").value;
+            const passwordGroup = document.getElementById("passwordGroup");
+            const passwordError = document.getElementById("passwordError");
+            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[_\-!@#$%^&*]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                valid = false;
+                passwordGroup.classList.add("error");
+                passwordGroup.classList.remove("success");
+                passwordError.textContent = "Мінімум 8 символів, 1 літера, цифра і спецсимвол";
+            } else {
+                passwordGroup.classList.add("success");
+                passwordGroup.classList.remove("error");
+                passwordError.textContent = "";
+            }
+
+            // Перевірка поштового індексу
+            const postcode = document.getElementById("postcode").value;
+            const postcodeGroup = document.getElementById("postcodeGroup");
+            const postcodeError = document.getElementById("postcodeError");
+            const postcodeRegex = /^\d{5}$/;
+            if (!postcodeRegex.test(postcode)) {
+                valid = false;
+                postcodeGroup.classList.add("error");
+                postcodeGroup.classList.remove("success");
+                postcodeError.textContent = "Має складатися з 5 цифр";
+            } else {
+                postcodeGroup.classList.add("success");
+                postcodeGroup.classList.remove("error");
+                postcodeError.textContent = "";
+            }
+
+            // Якщо всі поля валідні, відправляємо форму
+            if (valid) {
+                alert("Форма заповнена вірно!");
+            }
+        });
     </script>
 </body>
 </html>
