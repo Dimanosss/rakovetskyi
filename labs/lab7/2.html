@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функції для роботи із рядками</title>
+    <script>
+        // 2.1 Функція порівняння довжини рядків
+        function compareStrings() {
+            let str1 = document.getElementById("string1").value;
+            let str2 = document.getElementById("string2").value;
+            let result = str1.length > str2.length ? 1 : (str1.length < str2.length ? -1 : 0);
+            alert("Результат порівняння: " + result);
+        }
+
+        // 2.2 Функція для пошуку індексів символу у рядку
+        function findCharIndices() {
+            let str = document.getElementById("string").value;
+            let char = document.getElementById("character").value;
+            let indices = [];
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === char) {
+                    indices.push(i);
+                }
+            }
+            alert(`Символ "${char}" зустрічається ${indices.length} разів за індексами: ${indices.join(', ')}`);
+        }
+
+        // 2.3 Функція переведення першого символу у верхній регістр
+        function capitalizeFirstChar() {
+            let str = document.getElementById("inputString").value;
+            let result = str.charAt(0).toUpperCase() + str.slice(1);
+            alert("Результат: " + result);
+        }
+
+        // 2.4 Функція підрахунку голосних літер
+        function countVowels() {
+            let str = document.getElementById("vowelString").value.toLowerCase();
+            let vowels = "аеєиіїоуюяaeiou";
+            let count = 0;
+            for (let char of str) {
+                if (vowels.includes(char)) count++;
+            }
+            alert("Кількість голосних: " + count);
+        }
+
+        // 2.5 Функція перевірки спаму
+        function checkSpam() {
+            let str = document.getElementById("spamString").value.toLowerCase();
+            let spamWords = ["100% безкоштовно", "збільшення продажів", "тільки сьогодні", "не видаляйте"];
+            let isSpam = spamWords.some(word => str.includes(word));
+            alert("Чи містить спам: " + isSpam);
+        }
+
+        // 2.6 Функція скорочення рядка
+        function truncateString() {
+            let str = document.getElementById("truncateString").value;
+            let maxLength = parseInt(document.getElementById("maxLength").value);
+            if (str.length > maxLength) {
+                str = str.slice(0, maxLength - 3) + '...';
+            }
+            alert("Скорочений рядок: " + str);
+        }
+    </script>
+</head>
+<body>
+    <h1>Функції для роботи із рядками</h1>
+
+    <h2>2.1 Порівняння довжини рядків</h2>
+    <input type="text" id="string1" placeholder="Рядок 1">
+    <input type="text" id="string2" placeholder="Рядок 2">
+    <button onclick="compareStrings()">Порівняти</button>
+
+    <h2>2.2 Пошук символу у рядку</h2>
+    <input type="text" id="string" placeholder="Рядок">
+    <input type="text" id="character" placeholder="Символ">
+    <button onclick="findCharIndices()">Знайти</button>
+
+    <h2>2.3 Верхній регістр першого символу</h2>
+    <input type="text" id="inputString" placeholder="Рядок">
+    <button onclick="capitalizeFirstChar()">Перевести</button>
+
+    <h2>2.4 Підрахунок голосних літер</h2>
+    <input type="text" id="vowelString" placeholder="Рядок">
+    <button onclick="countVowels()">Порахувати</button>
+
+    <h2>2.5 Перевірка на спам</h2>
+    <input type="text" id="spamString" placeholder="Рядок">
+    <button onclick="checkSpam()">Перевірити</button>
+
+    <h2>2.6 Скорочення рядка</h2>
+    <input type="text" id="truncateString" placeholder="Рядок">
+    <input type="number" id="maxLength" placeholder="Максимальна довжина">
+    <button onclick="truncateString()">Скоротити</button>
+</body>
+</html>
