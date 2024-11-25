@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розбір e-mail</title>
+</head>
+<body>
+    <h1>Розбір електронної пошти</h1>
+    <p>Введіть e-mail для аналізу:</p>
+    <input type="text" id="email" placeholder="example@mail.com">
+    <button onclick="analyzeEmail()">Аналізувати</button>
+    <div id="output"></div>
+
+    <script>
+        function analyzeEmail() {
+            // Отримання введеної адреси
+            let s = document.getElementById("email").value;
+            // Регулярний вираз
+            let r = /^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+            // Збіг з регулярним виразом
+            let a = s.match(r);
+            let output = document.getElementById("output");
+            output.innerHTML = ""; // Очищення попереднього результату
+
+            if (a) {
+                // Виведення кожного елементу
+                for (let i = 0; i < a.length; i++) {
+                    output.innerHTML += `<p>a[${i}] = ${a[i]}</p>`;
+                }
+            } else {
+                // Повідомлення про помилку
+                output.innerHTML = `<p style="color: red;">Невалідний e-mail!</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
