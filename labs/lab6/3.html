@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валідація форми</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: calc(100% - 30px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .form-group .success-icon {
+            margin-left: 10px;
+            color: green;
+        }
+        .form-group.error input {
+            border-color: red;
+            color: red;
+        }
+        .form-group.success input {
+            border-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Форма реєстрації</h2>
+        <form id="registrationForm">
+            <div class="form-group" id="emailGroup">
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email" placeholder="example@pnu.edu.ua">
+                <span class="error"></span>
+            </div>
+            <div class="form-group" id="fullnameGroup">
+                <label for="fullname">Ім’я та прізвище:</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Ім’я Прізвище">
+                <span class="error"></span>
+            </div>
+            <div class="form-group" id="usernameGroup">
+                <label for="username">Логін:</label>
+                <input type="text" id="username" name="username" placeholder="Ваш логін">
+                <span class="error"></span>
+            </div>
+            <div class="form-group" id="passwordGroup">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" placeholder="Ваш пароль">
+                <span class="error"></span>
+            </div>
+            <div class="form-group" id="postcodeGroup">
+                <label for="postcode">Поштовий індекс:</label>
+                <input type="text" id="postcode" name="postcode" placeholder="Ваш поштовий індекс">
+                <span class="error"></span>
+            </div>
+            <div>
+                <button type="button" onclick="validateForm()">Перевірити</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Валідація кожного поля
+            validateField("email", /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i, "Повинен бути у форматі example@pnu.edu.ua");
+            validateField("fullname", /^[A-ZА-Я][a-zа-я]+ [A-ZА-Я]+$/, "Ім’я з великої, прізвище великими літерами");
+            validateField("username", /^[a-zA-Z0-9]+$/, "Тільки латиниця");
+            validateField("password", /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[_\-!@#$%^&*]).{8,}$/, "Мінімум 8 символів, 1 літера, цифра і спецсимвол");
+            validateField("postcode", /^\d{5}$/, "Має складатися з 5 цифр");
+        }
+
+        function validateField(id, regex, errorMessage) {
+            const field = document.getElementById(id);
+            const group = document.getElementById(`${id}Group`);
+            const errorSpan = group.querySelector(".error");
+            
+            if (regex.test(field.value)) {
+                // Успішна валідація
+                group.classList.remove("error");
+                group.classList.add("success");
+                errorSpan.textContent = "";
+                if (!group.querySelector(".success-icon")) {
+                    const successIcon = document.createElement("span");
+                    successIcon.className = "success-icon";
+                    successIcon.textContent = "✔";
+                    group.appendChild(successIcon);
+                }
+            } else {
+                // Помилка валідації
+                group.classList.remove("success");
+                group.classList.add("error");
+                errorSpan.textContent = errorMessage;
+                const successIcon = group.querySelector(".success-icon");
+                if (successIcon) {
+                    group.removeChild(successIcon);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
