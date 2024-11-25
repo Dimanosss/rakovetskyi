@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функції з регулярними виразами</title>
+    <script>
+        // 3.1 Функція toCamelCase
+        function toCamelCase() {
+            let inputArray = document.getElementById("snakeArray").value.split(', ');
+            let camelCaseArray = inputArray.map(variable => 
+                variable.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())
+            );
+            alert("Snake Case: " + inputArray.join(', ') + "\nCamel Case: " + camelCaseArray.join(', '));
+        }
+
+        // 3.2 Функція toSnakeCase
+        function toSnakeCase() {
+            let inputArray = document.getElementById("camelArray").value.split(', ');
+            let snakeCaseArray = inputArray.map(variable =>
+                variable.replace(/[A-Z]/g, letter => '_' + letter.toLowerCase())
+            );
+            alert("Camel Case: " + inputArray.join(', ') + "\nSnake Case: " + snakeCaseArray.join(', '));
+        }
+
+        // 3.3 Заміна дат формату yyyy/mm/dd на dd.mm.yyyy
+        function replaceDates() {
+            let text = document.getElementById("dateText").value;
+            let updatedText = text.replace(/\b(\d{4})\/(\d{2})\/(\d{2})\b/g, '$3.$2.$1');
+            alert("Оновлений текст: " + updatedText);
+        }
+    </script>
+</head>
+<body>
+    <h1>Функції з регулярними виразами</h1>
+
+    <h2>3.1 Перетворення Snake Case → Camel Case</h2>
+    <p>Введіть змінні через кому у Snake Case:</p>
+    <input type="text" id="snakeArray" placeholder="Наприклад: my_variable, new_brand_product">
+    <button onclick="toCamelCase()">Перетворити</button>
+
+    <h2>3.2 Перетворення Camel Case → Snake Case</h2>
+    <p>Введіть змінні через кому у Camel Case:</p>
+    <input type="text" id="camelArray" placeholder="Наприклад: myVariable, newBrandProduct">
+    <button onclick="toSnakeCase()">Перетворити</button>
+
+    <h2>3.3 Заміна формату дат</h2>
+    <p>Введіть текст із датами формату yyyy/mm/dd:</p>
+    <textarea id="dateText" rows="4" cols="50" placeholder="Наприклад: Сьогодні 2024/11/25, а завтра 2024/11/26"></textarea>
+    <br>
+    <button onclick="replaceDates()">Замінити дати</button>
+</body>
+</html>
