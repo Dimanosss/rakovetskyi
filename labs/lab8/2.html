@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Завдання з роботи з датами та часом</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .task {
+      margin-bottom: 20px;
+    }
+    .output {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Завдання 2.1: Виведення поточної дати, дня тижня і часу -->
+  <div class="task">
+    <h3>Завдання 2.1. Виведення поточної дати, дня тижня і часу</h3>
+    <button onclick="showCurrentDate()">Виконати</button>
+    <div id="current-date" class="output"></div>
+  </div>
+
+  <!-- Завдання 2.2: Виведення дня і номера тижня -->
+  <div class="task">
+    <h3>Завдання 2.2. Виведення дня і номера тижня</h3>
+    <button onclick="showDayAndNumber()">Виконати</button>
+    <div id="day-number" class="output"></div>
+  </div>
+
+  <!-- Завдання 2.3: Дата, яка була N днів назад чи вперед -->
+  <div class="task">
+    <h3>Завдання 2.3. Виведення дати N днів назад чи вперед</h3>
+    <input type="number" id="daysInput" placeholder="Введіть кількість днів" />
+    <button onclick="calculateDate()">Виконати</button>
+    <div id="calculated-date" class="output"></div>
+  </div>
+
+  <!-- Завдання 2.4: Останній день місяця -->
+  <div class="task">
+    <h3>Завдання 2.4. Останній день місяця</h3>
+    <input type="number" id="year" placeholder="Рік" />
+    <input type="number" id="month" placeholder="Місяць" />
+    <button onclick="getLastDay()">Виконати</button>
+    <div id="last-day" class="output"></div>
+  </div>
+
+  <!-- Завдання 2.5: Кількість секунд з початку дня -->
+  <div class="task">
+    <h3>Завдання 2.5. Кількість секунд з початку дня</h3>
+    <button onclick="getSecondsOfDay()">Виконати</button>
+    <div id="seconds-of-day" class="output"></div>
+  </div>
+
+  <!-- Завдання 2.6: Формування дати та виведення часу -->
+  <div class="task">
+    <h3>Завдання 2.6. Формування дати та виведення часу</h3>
+    <input type="text" id="timeInput" placeholder="дд.мм.рррр год:хв" />
+    <button onclick="timeDifference()">Виконати</button>
+    <div id="time-difference" class="output"></div>
+  </div>
+
+  <script>
+    // Завдання 2.1: Виведення поточної дати, дня тижня і часу
+    function showCurrentDate() {
+      const date = new Date();
+      const daysOfWeek = ["неділя", "понеділок", "вівторок", "середа", "четвер", "п’ятниця", "субота"];
+      const months = ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"];
+
+      const day = date.getDate();
+      const month = months[date.getMonth()];
+      const year = date.getFullYear();
+      const dayOfWeek = daysOfWeek[date.getDay()];
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+
+      const output = `Дата: ${day} ${month} ${year} року<br>День тижня: ${dayOfWeek}<br>Час: ${hours}:${minutes}`;
+      document.getElementById('current-date').innerHTML = output;
+    }
+
+    // Завдання 2.2: Виведення дня і номера тижня
+    function getDayInfo(date) {
+      const daysOfWeek = ["понеділок", "вівторок", "середа", "четвер", "п’ятниця", "субота", "неділя"];
+      const dayNumber = (date.getDay() === 0) ? 7 : date.getDay(); // коригуємо день тижня: 1 - понеділок, 7 - неділя
+      const dayName = daysOfWeek[dayNumber - 1];
+      return { dayNumber, dayName };
+    }
+
+    function showDayAndNumber() {
+      const date = new Date();
+      const dayInfo = getDayInfo(date);
+      const output = `Номер тижня: ${dayInfo.dayNumber}<br>Назва дня тижня: ${dayInfo.dayName}.`;
+      document.getElementById('day-number').innerHTML = output;
+    }
+
+    // Завдання 2.3: Дата, яка була N днів назад чи вперед
+    function calculateDate() {
+      const n = parseInt(document.getElementById('daysInput').value);
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + n);
+
+      const day = currentDate.getDate();
+      const month = currentDate.getMonth() + 1;
+      const year = currentDate.getFullYear();
+
+      const pastOrFuture = n >= 0 ? 'майбутня' : 'минула';
+      const output = `Дата: ${day}.${month}.${year} - ${pastOrFuture} дата.`;
+      document.getElementById('calculated-date').innerHTML = output;
+    }
+
+    // Завдання 2.4: Останній день місяця
+    function getLastDay() {
+      const year = document.getElementById('year').value;
+      const month = document.getElementById('month').value - 1; // Місяці в JavaScript від 0 до 11
+      const lastDay = new Date(year, month + 1, 0).getDate();
+      document.getElementById('last-day').innerHTML = `Останній день місяця: ${lastDay}`;
+    }
+
+    // Завдання 2.5: Кількість секунд з початку дня
+    function getSecondsOfDay() {
+      const now = new Date();
+      const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      
+      const secondsPassed = Math.floor((now - startOfDay) / 1000);
+      const secondsToNextDay = Math.floor((endOfDay - now) / 1000);
+
+      const output = `Кількість секунд з початку дня: ${secondsPassed}<br>Кількість секунд до початку наступного дня: ${secondsToNextDay}`;
+      document.getElementById('seconds-of-day').innerHTML = output;
+    }
+
+    // Завдання 2.6: Формування дати та виведення часу
+    function timeDifference() {
+      const input = document.getElementById('timeInput').value;
+      const [datePart, timePart] = input.split(" ");
+      const [day, month, year] = datePart.split(".");
+      const [hours, minutes] = timePart.split(":");
+      
+      const inputDate = new Date(year, month - 1, day, hours, minutes);
+      const now = new Date();
+      const diffInSeconds = Math.floor((now - inputDate) / 1000);
+      
+      let output = '';
+      if (diffInSeconds < 60) {
+        output = `${diffInSeconds} сек. назад`;
+      } else if (diffInSeconds < 3600) {
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        output = `${diffInMinutes} хв. назад`;
+      } else {
+        const formattedDate = `${day}.${month}.${year} ${timePart}`;
+        output = formattedDate;
+      }
+      
+      document.getElementById('time-difference').innerHTML = output;
+    }
+  </script>
+
+</body>
+</html>
