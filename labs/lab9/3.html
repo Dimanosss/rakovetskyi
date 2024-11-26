@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Структурована анімація</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      position: absolute;
+      animation: moveBox 2s linear infinite;
+    }
+
+    @keyframes moveBox {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(300px, 0); }
+      100% { transform: translate(300px, 300px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box"></div>
+
+  <script>
+    // Ви можете маніпулювати параметрами анімації через JavaScript
+    setTimeout(function() {
+      document.getElementById("box").style.animation = "moveBox 2s ease-out infinite";
+    }, 4000); // після 4 секунд зміниться стиль анімації
+  </script>
+
+</body>
+</html>
