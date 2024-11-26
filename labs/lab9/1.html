@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript Анімації</title>
+  <title>Анімація з setInterval</title>
   <style>
     #box {
       width: 100px;
@@ -11,114 +11,23 @@
       background-color: red;
       position: absolute;
     }
-
-    #box2 {
-      width: 100px;
-      height: 100px;
-      background-color: green;
-      position: absolute;
-    }
-
-    #box3 {
-      width: 100px;
-      height: 100px;
-      background-color: blue;
-      position: absolute;
-      animation: moveBox 2s linear infinite;
-    }
-
-    @keyframes moveBox {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(300px, 0); }
-      100% { transform: translate(300px, 300px); }
-    }
-
-    canvas {
-      border: 1px solid black;
-    }
-
   </style>
 </head>
 <body>
 
-  <h3>Анімація з setInterval</h3>
   <div id="box"></div>
 
-  <h3>Анімація з requestAnimationFrame</h3>
-  <div id="box2"></div>
-
-  <h3>CSS Структурована анімація</h3>
-  <div id="box3"></div>
-
-  <h3>Анімація на Canvas</h3>
-  <canvas id="myCanvas" width="500" height="500"></canvas>
-
   <script>
-    // 1. Використання setInterval
     let box = document.getElementById("box");
     let x = 0;
     let y = 0;
 
+    // Анімація, яка рухає коробку по діагоналі
     setInterval(function() {
       x += 2; // переміщаємо по осі X
       y += 2; // переміщаємо по осі Y
       box.style.transform = `translate(${x}px, ${y}px)`;
     }, 20); // інтервал 20 мс
-
-    // 2. Використання requestAnimationFrame
-    let box2 = document.getElementById("box2");
-
-    function animate() {
-      x += 2;
-      y += 2;
-      box2.style.transform = `translate(${x}px, ${y}px)`;
-      requestAnimationFrame(animate);
-    }
-
-    requestAnimationFrame(animate); // Запускаємо анімацію
-
-    // 3. Структурована анімація (CSS + JavaScript)
-    setTimeout(function() {
-      document.getElementById("box3").style.animation = "moveBox 2s ease-out infinite";
-    }, 4000); // після 4 секунд зміниться стиль анімації
-
-    // 4. Функції часу (timing functions)
-    let box4 = document.getElementById("box4");
-    box4.style.animation = "moveBox 2s ease-in-out infinite";
-
-    // 5. Реверс анімації (CSS анімація)
-    let box5 = document.getElementById("box5");
-    box5.style.animation = "moveBox 2s ease-in-out infinite alternate";
-
-    // 6. Анімація на Canvas
-    const canvas = document.getElementById("myCanvas");
-    const ctx = canvas.getContext("2d");
-
-    let xCanvas = 50;
-    let yCanvas = 50;
-    let radius = 20;
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // очищаємо екран
-      ctx.beginPath();
-      ctx.arc(xCanvas, yCanvas, radius, 0, Math.PI * 2);
-      ctx.fillStyle = "blue";
-      ctx.fill();
-      ctx.closePath();
-
-      // Оновлюємо координати для анімації
-      xCanvas += 2;
-      yCanvas += 2;
-
-      if (xCanvas > canvas.width || yCanvas > canvas.height) {
-        xCanvas = 50; // рестартуємо анімацію
-        yCanvas = 50;
-      }
-
-      requestAnimationFrame(draw); // повторюємо анімацію
-    }
-
-    draw(); // запуск анімації на Canvas
   </script>
 
 </body>
