@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Приклад</title>
+  <style>
+    #hoverDiv {
+      width: 200px;
+      height: 100px;
+      background-color: lightblue;
+      text-align: center;
+      line-height: 100px;
+      border: 2px solid #ccc;
+      transition: all 0.3s ease;
+    }
+
+    .hovered {
+      background-color: yellow;
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript" src="./js/jquery.map"></script>
+  <script>
+    $(document).ready(function() {
+      // 1. Виводимо повідомлення в першому та останньому абзаці
+      $("p:first").text("DOM first!"); // Перший абзац
+      $("p:last").text("DOM last!");   // Останній абзац
+
+      // 2. Приховуємо блок і показуємо його при натисканні
+      var $text = $('#hide_text');
+      $text.hide();  // Приховуємо блок
+      $('.button').click(function() {
+        $text.show(200);  // Показуємо блок з затримкою 200 мс
+      });
+
+      // 3. Додаємо стиль до div при наведенні миші
+      $('#hoverDiv').hover(
+        function() { // коли мишка наводиться
+          $(this).addClass('hovered');
+        },
+        function() { // коли мишка відводиться
+          $(this).removeClass('hovered');
+        }
+      );
+    });
+  </script>
+</head>
+<body>
+
+  <h1>Контент сторінки</h1>
+  
+  <p>Цей абзац буде змінений за допомогою jQuery.</p>
+  
+  <a href="#" class="button">Натисніть, щоб показати текст</a>
+  
+  <div id="hide_text">Демонстраційний прихований текст</div>
+  
+  <div id="hoverDiv">Наведіть на мене мишку</div>
+  
+  <p>Цей абзац також буде змінений за допомогою jQuery.</p>
+
+</body>
+</html>
