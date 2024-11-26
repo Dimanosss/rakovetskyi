@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анімація на canvas</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let x = 50;
+    let y = 50;
+    let radius = 20;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // очищаємо екран
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = "blue";
+      ctx.fill();
+      ctx.closePath();
+
+      // Оновлюємо координати для анімації
+      x += 2;
+      y += 2;
+
+      if (x > canvas.width || y > canvas.height) {
+        x = 50; // рестартуємо анімацію
+        y = 50;
+      }
+
+      requestAnimationFrame(draw); // повторюємо анімацію
+    }
+
+    draw(); // запуск анімації
+  </script>
+
+</body>
+</html>
