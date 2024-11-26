@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Часовий об'єкт</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .time-display {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    input {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="time-display" id="current-time">Час: 00:00:00</div>
+
+  <div>
+    <label for="seconds">Секунди:</label>
+    <input type="number" id="seconds" min="1" />
+    <button onclick="changeTimeInSeconds()">Змінити час на секунди</button>
+  </div>
+
+  <div>
+    <label for="minutes">Хвилини:</label>
+    <input type="number" id="minutes" min="1" />
+    <button onclick="changeTimeInMinutes()">Змінити час на хвилини</button>
+  </div>
+
+  <div>
+    <label for="hours">Години:</label>
+    <input type="number" id="hours" min="1" />
+    <button onclick="changeTimeInHours()">Змінити час на години</button>
+  </div>
+
+  <script>
+    // Об'єкт для зберігання часу
+    const time = {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+
+      // Функція для виведення поточного часу
+      displayTime: function() {
+        const hours = this.hours.toString().padStart(2, '0');
+        const minutes = this.minutes.toString().padStart(2, '0');
+        const seconds = this.seconds.toString().padStart(2, '0');
+        document.getElementById('current-time').textContent = `Час: ${hours}:${minutes}:${seconds}`;
+      },
+
+      // Функція зміни часу на передану кількість секунд
+      changeSeconds: function(secondsToAdd) {
+        this.seconds += secondsToAdd;
+
+        // Переводимо надлишок секунд в хвилини та години
+        if (this.seconds >= 60) {
+          this.minutes += Math.floor(this.seconds / 60);
+          this.seconds = this.seconds % 60;
+        }
+        if (this.minutes >= 60) {
+          this.hours += Math.floor(this.minutes / 60);
+          this.minutes = this.minutes % 60;
+        }
+        if (this.hours >= 24) {
+          this.hours = this.hours % 24;
+        }
+
+        this.displayTime();
+      },
+
+      // Функція зміни часу на передану кількість хвилин
+      changeMinutes: function(minutesToAdd) {
+        this.minutes += minutesToAdd;
+
+        // Переводимо надлишок хвилин в години та секунди
+        if (this.minutes >= 60) {
+          this.hours += Math.floor(this.minutes / 60);
+          this.minutes = this.minutes % 60;
+        }
+        if (this.hours >= 24) {
+          this.hours = this.hours % 24;
+        }
+
+        this.displayTime();
+      },
+
+      // Функція зміни часу на передану кількість годин
+      changeHours: function(hoursToAdd) {
+        this.hours += hoursToAdd;
+
+        // Переводимо надлишок годин в день
+        if (this.hours >= 24) {
+          this.hours = this.hours % 24;
+        }
+
+        this.displayTime();
+      }
+    };
+
+    // Виведення початкового часу
+    time.displayTime();
+
+    // Функція для зміни часу на секунди
+    function changeTimeInSeconds() {
+      const seconds = parseInt(document.getElementById('seconds').value);
+      if (!isNaN(seconds)) {
+        time.changeSeconds(seconds);
+      }
+    }
+
+    // Функція для зміни часу на хвилини
+    function changeTimeInMinutes() {
+      const minutes = parseInt(document.getElementById('minutes').value);
+      if (!isNaN(minutes)) {
+        time.changeMinutes(minutes);
+      }
+    }
+
+    // Функція для зміни часу на години
+    function changeTimeInHours() {
+      const hours = parseInt(document.getElementById('hours').value);
+      if (!isNaN(hours)) {
+        time.changeHours(hours);
+      }
+    }
+  </script>
+</body>
+</html>
