@@ -40,18 +40,17 @@
     .message {
       margin-top: 20px;
     }
-
   </style>
   <script src="./js/jquery.map"></script>
   <script>
     $(document).ready(function() {
       // 1. Стиль для div: одинарний клік - з'являється рамка і заливка, подвійний - повернення до початкових значень
       $('#hoverDiv').click(function() {
-        $(this).addClass('clicked');
+        $(this).addClass('clicked'); // Одинарний клік: додати стиль
       });
 
       $('#hoverDiv').dblclick(function() {
-        $(this).removeClass('clicked');
+        $(this).removeClass('clicked'); // Подвійний клік: видалити стиль
       });
 
       // 2. Кнопка для одинарного кліку
@@ -66,17 +65,17 @@
 
       // 4. Показ/приховування зображення
       $('#showImageButton').click(function() {
-        $('#imageContainer').fadeIn();
+        $('#imageContainer').fadeIn(); // Показати зображення
       });
 
       $('#imageContainer img').click(function() {
-        $('#imageContainer').fadeOut();
+        $('#imageContainer').fadeOut(); // Приховати зображення при кліку
       });
 
       $('#imageContainer img').mouseover(function() {
-        $('#imageCaption').fadeIn();
+        $('#imageCaption').fadeIn(); // Показати підпис при наведенні
       }).mouseout(function() {
-        $('#imageCaption').fadeOut();
+        $('#imageCaption').fadeOut(); // Приховати підпис при виведенні миші
       });
 
       // 5. Форма для перевірки правильності введених даних
